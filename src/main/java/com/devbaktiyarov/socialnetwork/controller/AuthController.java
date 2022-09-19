@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devbaktiyarov.socialnetwork.dto.UserDto;
+import com.devbaktiyarov.socialnetwork.dto.JWTProvider;
+import com.devbaktiyarov.socialnetwork.dto.UserDTO;
 import com.devbaktiyarov.socialnetwork.entity.User;
 import com.devbaktiyarov.socialnetwork.service.RegistrationService;
 import com.devbaktiyarov.socialnetwork.validation.UserValidator;
@@ -28,21 +29,24 @@ public class AuthController {
     private final RegistrationService registrationService;
     private final UserValidator userValidator;
     private final ModelMapper modelMapper;
+    private final JWTProvider jwtProvider;
 
+   
     public AuthController(RegistrationService registrationService, UserValidator userValidator,
-            ModelMapper modelMapper) {
+            ModelMapper modelMapper, JWTProvider jwtProvider) {
         this.registrationService = registrationService;
         this.userValidator = userValidator;
         this.modelMapper = modelMapper;
+        this.jwtProvider = jwtProvider;
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{username}")
-    public ResponseEntity<List<UserDto>> findByUsername(@PathVariable String username) {
+    public ResponseEntity<List<UserDTO>> findByUsername(@PathVariable String username) {
         List<User> sourceUsers = registrationService.findByUsername(username);
         
-        List<UserDto> outcomeUsers = sourceUsers.stream()
-                .map(user -> modelMapper.map(user, UserDto.class))
+        List<UserDTO> outcomeUsers = sourceUsers.stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.FOUND).body(outcomeUsers);
@@ -57,7 +61,9 @@ public class AuthController {
 
         registrationService.register(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(user.getUsername() + " successfully registered");
+        String token = jwtProvider.generateToken(user.getUsername());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(token);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
