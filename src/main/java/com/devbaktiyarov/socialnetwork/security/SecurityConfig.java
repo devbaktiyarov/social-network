@@ -2,6 +2,7 @@ package com.devbaktiyarov.socialnetwork.security;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+import com.devbaktiyarov.socialnetwork.security.jwt.JWTFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,7 +29,7 @@ public class SecurityConfig {
             .httpBasic().disable()
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(STATELESS)
-            .and().authorizeRequests().antMatchers("/auth/").permitAll()
+            .and().authorizeRequests().antMatchers("/registration/","/auth/login").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

@@ -1,7 +1,6 @@
-package com.devbaktiyarov.socialnetwork.security;
+package com.devbaktiyarov.socialnetwork.security.jwt;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.devbaktiyarov.socialnetwork.dto.JWTProvider;
 import com.devbaktiyarov.socialnetwork.service.UserService;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

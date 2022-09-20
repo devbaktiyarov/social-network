@@ -1,4 +1,4 @@
-package com.devbaktiyarov.socialnetwork.dto;
+package com.devbaktiyarov.socialnetwork.security.jwt;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -27,7 +27,7 @@ public class JWTProvider {
 
     public String generateToken(String username) {
 
-        Date tokenExparation = Date.from(ZonedDateTime
+        Date tokenExpiration = Date.from(ZonedDateTime
                 .now()
                 .plusMinutes(60)
                 .toInstant());
@@ -37,7 +37,7 @@ public class JWTProvider {
                 .withClaim("username", username)
                 .withIssuedAt(new Date())
                 .withIssuer(issuer)
-                .withExpiresAt(tokenExparation)
+                .withExpiresAt(tokenExpiration)
                 .sign(Algorithm.HMAC256(jwtAccessSecret));
 
     }
