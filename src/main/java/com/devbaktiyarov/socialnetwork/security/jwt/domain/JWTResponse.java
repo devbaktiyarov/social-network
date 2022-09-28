@@ -1,4 +1,4 @@
-package com.devbaktiyarov.socialnetwork.security.jwt;
+package com.devbaktiyarov.socialnetwork.security.jwt.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,4 +8,5 @@ import lombok.Getter;
 public class JWTResponse {
     private final String type = "Bearer";
     private String accessToken;
+    private String refreshToken;
 }

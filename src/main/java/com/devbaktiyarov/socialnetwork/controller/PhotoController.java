@@ -33,7 +33,7 @@ public class PhotoController {
 
     @GetMapping("/")
     public ResponseEntity<List<Photo>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(photoRepository.findAll());
+        return ResponseEntity.ok(photoRepository.findAll());
     }
 
     
@@ -48,6 +48,6 @@ public class PhotoController {
     public ResponseEntity<List<Photo>> findPhotoByHashtag(@PathVariable String hashtag) {
         hashtag = "#" + hashtag;
         log.info("findPhotoByHashtag(): Found photo:  " + photoRepository.findByHashtag(hashtag));
-        return ResponseEntity.ok().body(photoRepository.findByHashtag(hashtag));
+        return ResponseEntity.ok(photoRepository.findByHashtag(hashtag));
     }
 }

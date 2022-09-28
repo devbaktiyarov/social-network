@@ -1,9 +1,9 @@
-package com.devbaktiyarov.socialnetwork.dto;
+package com.devbaktiyarov.socialnetwork.security.jwt.domain;
 
 import lombok.Data;
 
 @Data
-public class AuthenticationDTO {
+public class JWTRequest {
     private String username;
     private String password;
 }

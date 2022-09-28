@@ -29,7 +29,7 @@ public class SecurityConfig {
             .httpBasic().disable()
             .csrf().disable()
             .sessionManagement().sessionCreationPolicy(STATELESS)
-            .and().authorizeRequests().antMatchers("/registration/","/auth/login").permitAll()
+            .and().authorizeRequests().antMatchers("/registration/","/auth/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
